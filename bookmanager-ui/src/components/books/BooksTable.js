@@ -33,7 +33,10 @@ function BooksTable({ books, onAdd, onDelete, onUpdate }) {
   const paginated = sorted.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleSave = () => {
-    onAdd(newBook);
+    onAdd({
+      ...newBook,
+      yearOfPublication: parseInt(newBook.yearOfPublication) || 0
+    });
     setNewBook({ title: '', isbn: '', category: '', yearOfPublication: '', authors: [] });
     setShowNewRow(false);
   };
@@ -44,7 +47,10 @@ function BooksTable({ books, onAdd, onDelete, onUpdate }) {
   };
 
   const handleUpdate = (id) => {
-    onUpdate(id, editingBook);
+    onUpdate(id, {
+      ...editingBook,
+      yearOfPublication: parseInt(editingBook.yearOfPublication) || 0
+    });
     setEditingId(null);
   };
 
@@ -96,7 +102,7 @@ function BooksTable({ books, onAdd, onDelete, onUpdate }) {
                 <td style={styles.td} data-label="Title"><input style={styles.input} placeholder="Book title" value={newBook.title} onChange={e => setNewBook({...newBook, title: e.target.value})} /></td>
                 <td style={styles.td} data-label="ISBN"><input style={styles.input} placeholder="978-..." value={newBook.isbn} onChange={e => setNewBook({...newBook, isbn: e.target.value})} /></td>
                 <td style={styles.td} data-label="Category"><input style={styles.input} placeholder="Category" value={newBook.category} onChange={e => setNewBook({...newBook, category: e.target.value})} /></td>
-                <td style={styles.td} data-label="Year"><input style={styles.input} placeholder="Year" value={newBook.yearOfPublication} onChange={e => setNewBook({...newBook, yearOfPublication: e.target.value})} /></td>
+                <td style={styles.td} data-label="Year"><input style={styles.input} placeholder="Year" type="number" value={newBook.yearOfPublication} onChange={e => setNewBook({...newBook, yearOfPublication: e.target.value})} /></td>
                 <td style={styles.td} data-label="Authors"><input style={styles.input} placeholder="Author name" value={newBook.authors} onChange={e => setNewBook({...newBook, authors: e.target.value})} /></td>
                 <td style={styles.td} data-label="">
                   <div style={styles.actions}>
@@ -115,7 +121,7 @@ function BooksTable({ books, onAdd, onDelete, onUpdate }) {
                     <td style={styles.td} data-label="Title"><input style={styles.input} value={editingBook.title} onChange={e => setEditingBook({...editingBook, title: e.target.value})} /></td>
                     <td style={styles.td} data-label="ISBN"><input style={styles.input} value={editingBook.isbn} onChange={e => setEditingBook({...editingBook, isbn: e.target.value})} /></td>
                     <td style={styles.td} data-label="Category"><input style={styles.input} value={editingBook.category} onChange={e => setEditingBook({...editingBook, category: e.target.value})} /></td>
-                    <td style={styles.td} data-label="Year"><input style={styles.input} value={editingBook.yearOfPublication} onChange={e => setEditingBook({...editingBook, yearOfPublication: e.target.value})} /></td>
+                    <td style={styles.td} data-label="Year"><input style={styles.input} type="number" value={editingBook.yearOfPublication} onChange={e => setEditingBook({...editingBook, yearOfPublication: e.target.value})} /></td>
                     <td style={styles.td} data-label="Authors"><input style={styles.input} value={Array.isArray(editingBook.authors) ? editingBook.authors.join(', ') : editingBook.authors} onChange={e => setEditingBook({...editingBook, authors: e.target.value})} /></td>
                     <td style={styles.td} data-label="">
                       <div style={styles.actions}>
@@ -179,7 +185,7 @@ const styles = {
   input: { width: '100%', border: 'none', borderBottom: '2px solid #1A73E8', background: 'transparent', fontSize: '14px', color: '#202124', outline: 'none', padding: '2px 0', fontFamily: 'Roboto, sans-serif' },
   chip: { display: 'inline-flex', padding: '4px 12px', borderRadius: '16px', fontSize: '12px', fontWeight: '500', background: '#E8F0FE', color: '#1967D2' },
   actions: { display: 'flex', gap: '4px', alignItems: 'center' },
-  iconBtn: { width: '32px', height: '32px', borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '16px', color: '#5F6368', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  iconBtn: { width: '32px', height: '32px', borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', color: '#5F6368', display: 'flex', alignItems: 'center', justifyContent: 'center' },
   confirmBtn: { width: '32px', height: '32px', borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', color: '#1A73E8', fontSize: '16px' },
   cancelBtn: { width: '32px', height: '32px', borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', color: '#D93025', fontSize: '16px' },
   pagination: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', padding: '32px 0 8px' },
