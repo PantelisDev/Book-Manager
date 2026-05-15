@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #F8F9FA;
+}
+
+table { width: 100%; }
+
+@media (max-width: 768px) {
+  table thead { display: none; }
+  table, table tbody { display: block; width: 100%; }
+
+  table tr {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #F1F3F4;
+    background: white;
+    gap: 12px;
+  }
+
+  table tr:first-child { border-radius: 8px 8px 0 0; }
+  table tr:last-child { border-bottom: none; border-radius: 0 0 8px 8px; }
+
+  table td { display: none !important; }
+
+  table td[data-label="Title"],
+  table td[data-label="Name"] {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    height: auto !important;
+    padding: 0 !important;
+    border: none !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 500;
+    color: #202124;
+  }
+
+  table td[data-label="Title"]::after,
+  table td[data-label="Name"]::after {
+    content: attr(data-meta);
+    font-size: 12px;
+    font-weight: 400;
+    color: #9AA0A6;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  table td[data-label=""] {
+    display: flex !important;
+    gap: 4px;
+    flex-shrink: 0;
+    height: auto !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+}
